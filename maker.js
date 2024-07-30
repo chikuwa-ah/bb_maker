@@ -67,15 +67,18 @@ function mouseMove(e) {
         draw(e);
     }
 }
+let copy = false;
 
 document.addEventListener('click', mouseClick, false);
 function mouseClick(e) {
     if (e.offsetX > 40 && e.offsetX < 120 && e.offsetY > canvas.height - 92 && e.offsetY < canvas.height - 52) {
+        copy = false;
         init();
         return;
     }
 
     for (let i = 0; i < area.length; i++) {
+        copy = false;
         if (e.offsetX > area[i].x && e.offsetX < area[i].x + 58 && e.offsetY > area[i].y && e.offsetY < area[i].y + 40) {
             area[i].hard = select;
             break;
@@ -104,6 +107,13 @@ function mouseClick(e) {
         output += '\n]';
         console.log(output);
         navigator.clipboard.writeText(output);
+        copy = true;
+
+        const blob = new Blob([output], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'stage.txt';
+        a.click();
     }
 
     draw(e);
@@ -142,6 +152,11 @@ function draw(e) {
     text = 'COPY';
     textWidth = ctx.measureText(text).width;
     ctx.fillText(text, ((80 - textWidth) / 2) + 40, canvas.height - 24);
+    if (copy == true) {
+        text = 'COPIED!';
+        textWidth = ctx.measureText(text).width;
+        ctx.fillText(text, (canvas.width - textWidth) / 2, canvas.height - 90);
+    }
 
     ctx.strokeRect(630, canvas.height - 52, 40, 40);
     ctx.fillStyle = block_color[select];
