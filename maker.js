@@ -109,11 +109,11 @@ function mouseClick(e) {
         navigator.clipboard.writeText(output);
         copy = true;
 
-        const blob = new Blob([output], { type: 'text/plain' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'stage.txt';
-        a.click();
+        // const blob = new Blob([output], { type: 'text/plain' });
+        // const a = document.createElement('a');
+        // a.href = URL.createObjectURL(blob);
+        // a.download = 'stage.txt';
+        // a.click();
     }
 
     draw(e);
